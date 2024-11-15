@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordRush - Typing Speed Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WordRush</h1>
+            <p class="subheading">Test your typing speed with long paragraphs</p>
+        </header>
+
+        <main>
+            <button id="start-test-btn" class="btn">Start Test</button>
+
+            <div id="typing-container" class="hidden">
+                <div id="test-text-container">
+                    <p id="selected-text">Click "Start Test" to begin typing!</p>
+                </div>
+
+                <textarea id="user-input" placeholder="Start typing here..." autofocus></textarea>
+                <div id="results-container" class="hidden">
+                    <p id="results"></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created by Corvo_sso | 2024</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
