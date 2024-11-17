@@ -4,13 +4,15 @@ let startTime;
 let selectedText;
 
 function startTest() {
-    // Hide the "Start Test" button
+    console.log("Start Test clicked");
+
+    // Hide the "Start Test" button after the test begins
     document.getElementById('start-test-btn').style.display = 'none';
     
-    // Show the typing container
+    // Show the typing container (user will start typing here)
     document.getElementById('typing-container').classList.remove('hidden');
     
-    // Fetch the random text for the user to type
+    // Fetch random text for the user to type
     fetchRandomText();
     
     // Record the start time of the test
@@ -19,68 +21,46 @@ function startTest() {
 
 function fetchRandomText() {
     const randomTexts = [
-        "The wind whispered through the towering trees, as the sun began to set behind the mountains. The sky was painted in hues of pink and orange, casting a serene glow across the valley. Birds flew in the distance, and the scent of pine and earth filled the air. In the quiet, there was a sense of timelessness—a moment that stretched into eternity, where nothing mattered but the beauty of nature.",
-        "As the waves crashed against the shore, the sound echoed in the vast emptiness of the beach. The sand beneath my feet was warm, yet the ocean breeze cooled my face. I could see the horizon stretching out into infinity, as though the ocean and the sky were one continuous expanse of blue. It was a moment of peace, a break from the constant noise of the world. And for a fleeting second, I felt at home.",
-        "Technology is an ever-evolving landscape, constantly changing the way we live, work, and communicate. With the advent of artificial intelligence, machine learning, and quantum computing, the boundaries of what’s possible seem to expand with each passing day. Yet, with all of these advancements, we must ask ourselves: What are the ethical implications of such rapid progress? How can we ensure that technology serves humanity, rather than the other way around?",
-        "The city was alive with activity, as people rushed through the streets, each lost in their own world. Neon lights flickered above, casting a colorful glow on the pavement. The sound of car engines mixed with the chatter of pedestrians, creating a chaotic symphony of urban life. Yet, in the midst of it all, there was a sense of purpose, a collective energy that propelled the city forward. It was a place where dreams were made, and hopes were realized.",
+        "The wind whispered through the trees as the sun began to set, casting a golden hue across the landscape. Birds chirped, and the air was cool and crisp, a reminder of the changing seasons.",
+        "The ocean waves crashed against the shore, while the salty breeze swept across the sand. The sky stretched out into the horizon, where the blue of the sea met the sky in perfect harmony.",
+        "Technology is changing rapidly, with new innovations like AI and machine learning reshaping industries. We must consider how these advancements impact society and how we can use them for good.",
+        "In the heart of the city, people bustled through the streets, their faces illuminated by neon lights. The sound of footsteps mixed with the hum of traffic, creating a constant rhythm of urban life.",
     ];
-    
-    // Randomly select a paragraph of text
+
+    // Randomly select a shorter paragraph
     selectedText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
-    
-    // Display the selected text
-    document.getElementById('selected-text').textContent = selectedText;
-}
+    console.log("Random text selected:", selectedText);
 
-// Handling user input and checking if the typing is correct
+    // Display the selected shorter text for the user to type
+    document.getElementById('selected-text').textContent = selectedText;}
+
 document.getElementById('user-input').addEventListener('input', function () {
-    const userInput = this.value;
-    const selectedText = document.getElementById('selected-text').textContent;
+    const userInput = this.value.trim();  // Remove any leading/trailing spaces
+    const selectedText = document.getElementById('selected-text').textContent.trim(); // Also trim the selected text
 
-    // Check if the user's input matches the text and if they finished typing
+    console.log("User input:", userInput);
+
+    // Check if the user input matches the selected text
     if (userInput === selectedText) {
+        console.log("Text complete!");
+
         const endTime = new Date().getTime();
         const timeTaken = (endTime - startTime) / 1000; // Time in seconds
         const words = selectedText.split(' ').length;
         const wpm = (words / timeTaken) * 60; // Calculate words per minute
 
         // Show results
-        document.getElementById('results').textContent = `Test complete! You typed at ${wpm.toFixed(2)} words per minute.`;
-        document.getElementById('results-container').classList.remove('hidden');
+        const resultsMessage = `Test complete! You typed at ${wpm.toFixed(2)} words per minute.`;
+        document.getElementById('results').textContent = resultsMessage;
 
-        // Optionally hide the typing container after the test is done
+        // Show the results container and hide typing input
+        document.getElementById('results-container').classList.remove('hidden');
+        
+        // Hide typing container after the test is done
         document.getElementById('typing-container').classList.add('hidden');
         
-        // Show the start button again
+        // Show the "Start Test" button again for a new test
         document.getElementById('start-test-btn').style.display = 'inline-block';
     }
 });
 
-function displayResults(wpm, accuracy, timeTaken) {
-    document.getElementById('results').innerHTML = `WPM: ${wpm.toFixed(2)}<br>Accuracy: ${accuracy.toFixed(2)}%<br>Time: ${timeTaken.toFixed(2)} seconds`;
-    document.getElementById('results-container').classList.remove('hidden');
-}function calculateWPM(timeTaken, textLength) {
-    constfunction calculateWPM(timeTaken, textLength) {
-    const words = textLength / 5; // Assuming an average word length of 5 characters
-    return (words / timeTaken) * 60; // Words per minute
-}
-
-function calculateAccuracy(userInput, selectedText) {
-    let correctInputs = 0;
-    for (let i = 0; i < Math.min(userInput.length, selectedText.length); i++) {
-        if (userInput[i] === selectedText[i]) {
-            correctInputs++;
-        }
-    }
-    return (correctInputs / selectedText.length) * 100;
-}
-
-function displayResults(wpm, accuracy, timeTaken) {
-    document.getElementById('results').innerHTML = `
-        <strong>Results:</strong><br>
-        <span>Words Per Minute: ${wpm.toFixed(2)} WPM</span><br>
-        <span>Accuracy: ${accuracy.toFixed(2)}%</span><br>
-        <span>Time Taken: ${timeTaken.toFixed(2)} seconds</span>
-    `;
-    document.getElementById('results-container').classList.remove('hidden');
-}
